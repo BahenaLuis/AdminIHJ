@@ -1,0 +1,33 @@
+<form class=""  ng-submit="vm.createNews(vm.header, vm.description, vm.urlPhoto)">
+  <div class="modal-content modal-size-news">
+    <!-- Encabezado del modal -->
+    <div class="modal-header m-b-10">
+      <h4 class="modal-title">Nueva Noticia</h4>
+    </div>
+    <!-- Cuerpo del modal -->
+    <div class="modal-body ">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Encabezado</label>
+        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.header" placeholder="Encabezado..." required>
+      </div>
+      <div class="form-group m-t-10">
+        <label for="exampleInputEmail1">Descripcion</label>
+        <textarea class="form-control" rows="3" ng-model="vm.description" placeholder="Descripcion..." required></textarea>
+      </div>
+      <div class="form-group m-t-10">
+        <label for="sel1">Subir imagen</label>
+        <input type="file" ngf-select ng-model="vm.urlPhoto" name="file" accept=".pdf, .docx, .doc" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+      </div>
+    <!-- Pie de pagina del modal -->
+    <div class="modal-footer m-t-20">
+        <div class="row">
+            <div class="col-lg-6 center">
+            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalNews.dismiss()">Cancelar</button>
+            </div>
+            <div class="col-lg-6 certer">
+                <button type="submit" class="btn btn-warning w-70">Crear</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</form>
