@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-lg-2">
-            <button type="button" class="btn btn-warning w-100">Nuevo</button>
+            <button type="button" class="btn btn-warning w-100" ng-click="vm.openModalDirectory()">Nuevo</button>
         </div>
     </div>
     <div class="row">
@@ -18,16 +18,26 @@
             <table class="table">
             <thead class="inverseTable">
                 <tr>
-                    <th>Evento</th>
-                    <th>Lugar</th>
-                    <th>Fecha</th>
+                    <th class="col-lg-5">Nombre</th>
+                    <th class="col-lg-3">Cargo</th>
+                    <th class="col-lg-3">Correo electronico</th>
+                    <th class="col-lg-1"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                <tr ng-repeat="servidor in vm.directory">
+                    <td class="em-150">{{servidor.nombre}}</td>
+                    <td class="em-150">{{servidor.cargo}}</td>
+                    <td class="em-150">{{servidor.correo}}</td>
+                    <td>
+                        <div  class="dropup"  align="center">
+                            <i  class="zmdi zmdi-plus-circle zmdi-hc-2x cursor-pointer dropdown-toggle" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="cursor-pointer"><a ng-click="vm.editComment(comentario.comentario, comentario.$key)">Editar</a></li>
+                            <li class="cursor-pointer"><a ng-click="vm.deleteComment(comentario.$key)">Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
             </table>

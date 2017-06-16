@@ -1,0 +1,64 @@
+<form class=""  ng-submit="vm.createEvent(vm.event.title, vm.event.place, vm.event.description)">
+  <div class="modal-content modal-size-news">
+    <!-- Encabezado del modal -->
+    <div class="modal-header m-b-10">
+      <h4 class="modal-title">Nueva Evento</h4>
+    </div>
+    <!-- Cuerpo del modal -->
+    <div class="modal-body ">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Titulo</label>
+        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.event.title" placeholder="Encabezado..." required>
+      </div>
+      <div class="form-group">
+          <label for="exampleInputEmail1">Fecha</label>
+            <div class='input-group date' id='datetimepicker1'>
+                <input type='text' class="form-control" placeholder="Selecciona la fecha" id="fecha" />
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+      </div>
+      <div class="form-group">
+          <label for="exampleInputEmail1">Hora</label>
+        <div class='input-group date' id='datetimepicker3'>
+            <input type='text' class="form-control" placeholder="Selecciona la hora" id="hora"/>
+            <span class="input-group-addon">
+                <span class="glyphicon glyphicon-time"></span>
+            </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Lugar</label>
+        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.event.place" placeholder="Encabezado..." required>
+      </div>
+      <div class="form-group m-t-10">
+        <label for="exampleInputEmail1">Descripcion</label>
+        <textarea class="form-control" rows="3" ng-model="vm.event.description" placeholder="Descripcion..." required></textarea>
+      </div>
+
+      <!-- Script necesario para el datetimepicker -->
+      <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+                $('#datetimepicker3').datetimepicker({
+                    format: 'LT'
+                });
+            });
+        </script>
+      
+    <!-- Pie de pagina del modal -->
+    <div class="modal-footer m-t-20">
+        <div class="row">
+            <div class="col-lg-6 center">
+            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalEvents.dismiss()">Cancelar</button>
+            </div>
+            <div class="col-lg-6 certer">
+                <button type="submit" class="btn btn-warning w-70">Crear</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</form>

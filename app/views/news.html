@@ -18,16 +18,26 @@
             <table class="table">
             <thead class="inverseTable">
                 <tr>
-                    <th class="col-lg-8">Encabezado</th>
-                    <th class="col-lg-2">Foto</th>
-                    <th class="col-lg-2">Me gusta</th>
+                    <th class="col-lg-5">Encabezado</th>
+                    <th class="col-lg-3 center">Foto</th>
+                    <th class="col-lg-3 center">Me gusta</th>
+                    <th class="col-lg-1"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="new in vm.news">
-                    <td>{{new.titulo}}</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                <tr ng-repeat="new in vm.news | toArray">
+                    <td class="em-150">{{new.encabezado}}</td>
+                    <td class="center"><button type="button" ng-click="vm.seePhoto(new.rutaFoto)" class="btn btn-primary">Ver Foto</button></td>
+                    <td class="center em-150">{{new.meGusta}}</td>
+                    <td>
+                        <div  class="dropup"  align="center">
+                            <i  class="zmdi zmdi-plus-circle zmdi-hc-2x cursor-pointer dropdown-toggle" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="cursor-pointer"><a ng-click="vm.editComment(comentario.comentario, comentario.$key)">Editar</a></li>
+                            <li class="cursor-pointer"><a ng-click="vm.removeNews(new.$key, new.nombreFoto)">Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
             </table>

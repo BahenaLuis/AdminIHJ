@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'ui.bootstrap',
     'ngFileUpload',
-    'firebase'
+    'firebase',
+    'angular-toArrayFilter'
   ])
   .config(function ($routeProvider) {
     $routeProvider

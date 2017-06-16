@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-lg-2">
-            <button type="button" class="btn btn-warning w-100">Nuevo</button>
+            <button type="button" class="btn btn-warning w-100" ng-click="vm.openModalEvents()">Nuevo</button>
         </div>
     </div>
     <div class="row">
@@ -18,16 +18,26 @@
             <table class="table">
             <thead class="inverseTable">
                 <tr>
-                    <th>Evento</th>
-                    <th>Lugar</th>
-                    <th>Fecha</th>
+                    <th class="col-lg-5">Evento</th>
+                    <th class="col-lg-3 center">Lugar</th>
+                    <th class="col-lg-3 center">Fecha</th>
+                    <th class="col-lg-1"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                <tr ng-repeat="event in vm.events">
+                    <td class="em-150">{{event.titulo}}</td>
+                    <td class="center em-150">{{event.lugar}}</td>
+                    <td class="center em-150">{{event.fecha}}</td>
+                    <td>
+                        <div  class="dropup"  align="center">
+                            <i  class="zmdi zmdi-plus-circle zmdi-hc-2x cursor-pointer dropdown-toggle" data-toggle="dropdown"></i>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                            <li class="cursor-pointer"><a ng-click="vm.editComment(comentario.comentario, comentario.$key)">Editar</a></li>
+                            <li class="cursor-pointer"><a ng-click="vm.deleteComment(comentario.$key)">Eliminar</a></li>
+                            </ul>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
             </table>

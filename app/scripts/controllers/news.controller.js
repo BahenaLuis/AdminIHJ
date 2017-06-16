@@ -1,5 +1,5 @@
 angular.module('proyectoBaseAngularJsApp')
-  .controller('NewsCtrl',['$rootScope','$scope', '$uibModal', function ($rootScope, $scope, $uibModal ) {
+  .controller('NewsCtrl',['$rootScope','$scope', '$uibModal', '$window', function ($rootScope, $scope, $uibModal, $window) {
     
     //private variables
     var vm = this;
@@ -11,6 +11,8 @@ angular.module('proyectoBaseAngularJsApp')
     //public functions 
     vm.openModalNews = openModalNews;
     vm.createNews = createNews;
+    vm.seePhoto = seePhoto;
+    vm.removeNews = removeNews;
 
 
     //private functions 
@@ -45,13 +47,34 @@ angular.module('proyectoBaseAngularJsApp')
           fire.ref('ihj/noticias').push({
             'encabezado': header,
             'descripcion': description,
-            'rutaFoto': downloadURL 
+            'rutaFoto': downloadURL,
+            'meGusta': 0,
+            'nombreFoto': photo.name
           }).then(function(){
             swal("¡Noticia Creada!", "La noticia se ha creado satisfactoriamente", "success");
+            vm.modalNews.dismiss();
           });
-      });
+      }); 
+    }
 
-      
+    function seePhoto( urlPhoto ) {
+      $window.open(urlPhoto, '_blank');
+    }
+
+    function removeNews( key, namePhoto ) {
+      firebase.storage().ref().child('imagenes' + '/' + namePhoto).delete().then(function() {
+        // File deleted successfully
+        firebase.database().ref('ihj/noticias/' + key).remove().then(function(){
+          swal('¡Noticia Eliminada!', 'La noticia se ha eliminado exitosamente!', 'success');
+        });   
+      }).catch(function(error) {
+        // Uh-oh, an error occurred!
+          swal(
+            'Error!',
+            'No se pudo eliminar el archivo!',
+            'error'
+          )
+      });
     }
 
 

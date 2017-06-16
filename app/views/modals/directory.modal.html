@@ -1,0 +1,37 @@
+<form class=""  ng-submit="vm.createDirectory(vm.directory.fullName, vm.directory.position, vm.directory.email, vm.directory.photo)">
+  <div class="modal-content modal-size-news">
+    <!-- Encabezado del modal -->
+    <div class="modal-header m-b-10">
+      <h4 class="modal-title">Nuevo Servidor</h4>
+    </div>
+    <!-- Cuerpo del modal -->
+    <div class="modal-body ">
+      <div class="form-group">
+        <label for="exampleInputEmail1">Nombre</label>
+        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.directory.fullName" placeholder="Nombre completo..." required>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Cargo</label>
+        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.directory.position" placeholder="Encabezado..." required>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Correo electronico</label>
+        <input type="email" class="form-control" id="txtcorreo" ng-model="vm.directory.email" placeholder="Correo electronico..." required>
+      </div>
+      <div class="form-group m-t-10">
+        <label for="sel1">Foto del servidor</label>
+        <input type="file" ngf-select ng-model="vm.directory.photo" name="file" accept=".png, .jpg" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+      </div>
+    <!-- Pie de pagina del modal -->
+    <div class="modal-footer m-t-20">
+        <div class="row">
+            <div class="col-lg-6 center">
+            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalDirectory.dismiss()">Cancelar</button>
+            </div>
+            <div class="col-lg-6 certer">
+                <button type="submit" class="btn btn-warning w-70">Crear</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</form>
