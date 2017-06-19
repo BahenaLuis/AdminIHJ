@@ -5,7 +5,7 @@
         <div class="col-lg-3">
             <div class="form-group has-feedback" >
               <label for="search" class="sr-only">Search</label>
-              <input  type="text" class="form-control" name="search" id="search" placeholder="Buscar" ng-model="vm.searchTramite">
+              <input  type="text" class="form-control" name="search" id="search" placeholder="Buscar" ng-model="vm.searchEvents">
               <span class="glyphicon glyphicon-search form-control-feedback"></span>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="event in vm.events">
+                <tr ng-repeat="event in vm.events | toArray | filter: {titulo: vm.searchEvents}">
                     <td class="em-150">{{event.titulo}}</td>
                     <td class="center em-150">{{event.lugar}}</td>
                     <td class="center em-150">{{event.fecha}}</td>
@@ -33,8 +33,8 @@
                         <div  class="dropup"  align="center">
                             <i  class="zmdi zmdi-plus-circle zmdi-hc-2x cursor-pointer dropdown-toggle" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="cursor-pointer"><a ng-click="vm.editComment(comentario.comentario, comentario.$key)">Editar</a></li>
-                            <li class="cursor-pointer"><a ng-click="vm.deleteComment(comentario.$key)">Eliminar</a></li>
+                            <li class="cursor-pointer"><a ng-click="vm.editEvent(event.$key); vm.edit = true">Editar</a></li>
+                            <li class="cursor-pointer"><a ng-click="vm.removeEvent(event.$key)">Eliminar</a></li>
                             </ul>
                         </div>
                     </td>

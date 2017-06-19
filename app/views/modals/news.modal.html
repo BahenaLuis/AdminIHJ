@@ -1,5 +1,6 @@
-<form class=""  ng-submit="vm.createNews(vm.header, vm.description, vm.urlPhoto)">
+<form class=""  ng-submit="vm.createNews(vm.new.header, vm.new.description, vm.new.urlPhoto)">
   <div class="modal-content modal-size-news">
+    
     <!-- Encabezado del modal -->
     <div class="modal-header m-b-10">
       <h4 class="modal-title">Nueva Noticia</h4>
@@ -8,26 +9,39 @@
     <div class="modal-body ">
       <div class="form-group">
         <label for="exampleInputEmail1">Encabezado</label>
-        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.header" placeholder="Encabezado..." required>
+        <input type="text" class="form-control" id="txtcorreo" ng-model="vm.new.header" placeholder="Encabezado..." required>
       </div>
       <div class="form-group m-t-10">
         <label for="exampleInputEmail1">Descripcion</label>
-        <textarea class="form-control" rows="3" ng-model="vm.description" placeholder="Descripcion..." required></textarea>
+        <textarea class="form-control" rows="3" ng-model="vm.new.description" placeholder="Descripcion..." required></textarea>
       </div>
       <div class="form-group m-t-10">
         <label for="sel1">Subir imagen</label>
-        <input type="file" ngf-select ng-model="vm.urlPhoto" name="file" accept=".png, .jpg" ngf-max-size="5MB" required ngf-model-invalid="errorFile">
+        <input ng-if="!vm.isNew" type="file" ngf-select ng-model="vm.new.urlPhoto" name="file" accept=".png, .jpg" ngf-max-size="5MB"  ngf-model-invalid="errorFile">
+        <input ng-if="vm.isNew" type="file" ngf-select ng-model="vm.new.urlPhoto" name="file" accept=".png, .jpg" ngf-max-size="5MB" required  ngf-model-invalid="errorFile">
+      </div>
+      <div class="form-group center">
+        <!-- Solo para una noticia nueva(recurso local) -->
+        <img ng-if="vm.isNew && vm.new.urlPhoto != ''" ngf-src="vm.new.urlPhoto"  alt="No se pudo cargar la imagen" style="width:20%">
+        <!-- Los siguientes image son para la actualizacion de una noticia -->
+        <!--recurso externo-->
+        <img ng-if="vm.edit && vm.new.pathPhoto != '' && (vm.new.urlPhoto == '' || vm.new.urlPhoto == null)" ng-src="{{vm.new.pathPhoto}}" alt="No se pudo cargar la imagen" style="width:20%">
+        <!--recurso local-->
+        <img ng-if="vm.edit && vm.new.urlPhoto != ''" ngf-src="vm.new.urlPhoto"  alt="No se pudo cargar la imagen" style="width:20%">
       </div>
     <!-- Pie de pagina del modal -->
     <div class="modal-footer m-t-20">
         <div class="row">
             <div class="col-lg-6 center">
-            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalNews.dismiss()">Cancelar</button>
+            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalNews.dismiss(); vm.new.pathPhoto = ''; vm.new.urlPhoto = '';vm.new = {}; vm.isNew = false; vm.edit = false">Cancelar</button>
+            <!--<button type="button" class="btn btn-warning w-70" ng-click="vm.debugg(vm.new.pathPhoto, vm.new.urlPhoto, vm.isNew)">Cancelar</button>-->
             </div>
             <div class="col-lg-6 certer">
-                <button type="submit" class="btn btn-warning w-70">Crear</button>
+              <button ng-if="!vm.edit" type="submit" class="btn btn-warning w-70">Crear</button>
+              <button ng-if="vm.edit" type="button" class="btn btn-warning w-70" ng-click="vm.updateNews(vm.new.header, vm.new.description, vm.new.urlPhoto)">Actualizar</button>
             </div>
         </div>
     </div>
   </div>
 </form>
+<div ng-include="views/modals/loader.modal.html"></div>

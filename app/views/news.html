@@ -5,12 +5,12 @@
         <div class="col-lg-3">
             <div class="form-group has-feedback" >
               <label for="search" class="sr-only">Search</label>
-              <input  type="text" class="form-control" name="search" id="search" placeholder="Buscar" ng-model="vm.searchTramite">
+              <input  type="text" class="form-control" name="search" id="search" placeholder="Buscar" ng-model="vm.searchNews">
               <span class="glyphicon glyphicon-search form-control-feedback"></span>
             </div>
         </div>
         <div class="col-lg-2">
-            <button type="button" class="btn btn-warning w-100" ng-click="vm.openModalNews()">Nueva</button>
+            <button type="button" class="btn btn-warning w-100" ng-click="vm.openModalNews(); vm.isNew = true">Nueva</button>
         </div>
     </div>
     <div class="row">
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="new in vm.news | toArray">
+                <tr ng-repeat="new in vm.news | toArray | filter: {encabezado: vm.searchNews}">
                     <td class="em-150">{{new.encabezado}}</td>
                     <td class="center"><button type="button" ng-click="vm.seePhoto(new.rutaFoto)" class="btn btn-primary">Ver Foto</button></td>
                     <td class="center em-150">{{new.meGusta}}</td>
@@ -33,7 +33,7 @@
                         <div  class="dropup"  align="center">
                             <i  class="zmdi zmdi-plus-circle zmdi-hc-2x cursor-pointer dropdown-toggle" data-toggle="dropdown"></i>
                             <ul class="dropdown-menu dropdown-menu-right">
-                            <li class="cursor-pointer"><a ng-click="vm.editComment(comentario.comentario, comentario.$key)">Editar</a></li>
+                            <li class="cursor-pointer"><a ng-click="vm.editNews(new.$key); vm.edit = true">Editar</a></li>
                             <li class="cursor-pointer"><a ng-click="vm.removeNews(new.$key, new.nombreFoto)">Eliminar</a></li>
                             </ul>
                         </div>

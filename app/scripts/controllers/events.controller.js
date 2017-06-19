@@ -6,10 +6,16 @@ angular.module('proyectoBaseAngularJsApp')
     var fire = firebase.database();
     vm.months = new Array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     vm.events = {};
+    vm.event = {};
+    vm.edit = false;
+    vm.saveKey = "";
 
     //public functions 
     vm.openModalEvents = openModalEvents;
     vm.createEvent = createEvent;
+    vm.removeEvent = removeEvent;
+    vm.editEvent = editEvent;
+    vm.updateEvent = updateEvent;
 
 
 
@@ -35,8 +41,7 @@ angular.module('proyectoBaseAngularJsApp')
 
     function createEvent( titulo, lugar, descripcion ) {
       var fecha = document.getElementById("fecha").value;
-      var hora = document.getElementById("hora").value;
-      fecha = dateFormat(fecha);
+      var hora = document.getElementById("hora").value; 
       fire.ref('ihj/eventos').push({
         'titulo': titulo,
         'lugar': lugar,
@@ -54,6 +59,54 @@ angular.module('proyectoBaseAngularJsApp')
     function dateFormat( fecha ) {
       var array = fecha.split("/");
       return array[0] + " de " + vm.months[array[1] -1] + " del " + array[2];
+    }
+
+    /* Funcion para remover un evento */
+    function removeEvent( key ) {
+      swal({
+        title: '¿Esta seguro?',
+        text: "¡El evento sera eliminado permanentemente!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí',
+        cancelButtonText: 'No'
+      }).then(function () {
+        fire.ref('ihj/eventos/' + key).remove().then(function(){
+          swal('¡Evento Eliminado!', 'El evento ha sido eliminado satisfactoriamente', 'success');
+        });
+      });
+      
+    }
+
+    /* Funcion para cargar los datos de un evento cuando se desea actualizarlo */
+    function editEvent( key ) {
+      vm.saveKey = key;
+      var evento = _.find(vm.events, function(event){ return event.$key == key});
+      vm.event.title = evento.titulo;
+      vm.event.date = evento.fecha;
+      vm.event.hour = evento.hora;
+      vm.event.place = evento.lugar;
+      vm.event.description = evento.descripcion;
+      openModalEvents();
+    }
+
+    function updateEvent() {
+      vm.event.date = document.getElementById("fecha").value;
+      vm.event.hour = document.getElementById("hora").value; 
+      fire.ref('ihj/eventos/' + vm.saveKey).update({
+        'titulo': vm.event.title,
+        'fecha': vm.event.date,
+        'hora': vm.event.hour,
+        'lugar': vm.event.place,
+        'descripcion': vm.event.description
+      }).then(function(){
+        swal("¡Evento Actualizado!", "El evento se ha actualizado satisfactoriamente", "success");
+        vm.modalEvents.dismiss();
+      }).catch(function(error){
+        alert(error);
+      });
     }
 
   }]);

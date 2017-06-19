@@ -1,4 +1,4 @@
-<form class=""  ng-submit="vm.createDirectory(vm.directory.fullName, vm.directory.position, vm.directory.email, vm.directory.photo)">
+<form class=""  ng-submit="vm.createDirectory(vm.directory.fullName, vm.directory.position, vm.directory.email, vm.directory.urlPhoto)">
   <div class="modal-content modal-size-news">
     <!-- Encabezado del modal -->
     <div class="modal-header m-b-10">
@@ -20,16 +20,27 @@
       </div>
       <div class="form-group m-t-10">
         <label for="sel1">Foto del servidor</label>
-        <input type="file" ngf-select ng-model="vm.directory.photo" name="file" accept=".png, .jpg" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+        <input ng-if="vm.isNew" type="file" ngf-select ng-model="vm.directory.urlPhoto" name="file" accept=".png, .jpg" ngf-max-size="2MB" required ngf-model-invalid="errorFile">
+        <input ng-if="!vm.isNew" type="file" ngf-select ng-model="vm.directory.urlPhoto" name="file" accept=".png, .jpg" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+      </div>
+      <div class="form-group center">
+        <!-- Solo para una noticia nueva(recurso local) -->
+        <img ng-if="vm.isNew && vm.directory.urlPhoto != ''" ngf-src="vm.directory.urlPhoto"  alt="No se pudo cargar la imagen" style="width:20%">
+        <!-- Los siguientes image son para la actualizacion de una noticia -->
+        <!--recurso externo-->
+        <img ng-if="vm.edit && vm.directory.pathPhoto != '' && (vm.directory.urlPhoto == '' || vm.directory.urlPhoto == null)" ng-src="{{vm.directory.pathPhoto}}" alt="No se pudo cargar la imagen" style="width:20%">
+        <!--recurso local-->
+        <img ng-if="vm.edit && vm.directory.urlPhoto != ''" ngf-src="vm.directory.urlPhoto"  alt="No se pudo cargar la imagen" style="width:20%">
       </div>
     <!-- Pie de pagina del modal -->
     <div class="modal-footer m-t-20">
         <div class="row">
             <div class="col-lg-6 center">
-            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalDirectory.dismiss()">Cancelar</button>
+            <button type="button" class="btn btn-warning w-70" ng-click="vm.modalDirectory.dismiss(); vm.isNew = false; vm.edit = false; vm.directory = {}">Cancelar</button>
             </div>
             <div class="col-lg-6 certer">
-                <button type="submit" class="btn btn-warning w-70">Crear</button>
+                <button ng-if="vm.isNew" type="submit" class="btn btn-warning w-70">Crear</button>
+                <button ng-if="vm.edit" type="button" class="btn btn-warning w-70" ng-click="vm.updateDirectory(vm.directory.fullName, vm.directory.position, vm.directory.email, vm.directory.urlPhoto)">Actualizar</button>
             </div>
         </div>
     </div>
